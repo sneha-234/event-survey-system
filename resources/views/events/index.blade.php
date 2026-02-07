@@ -96,17 +96,24 @@
                 </form>
 
                 {{-- 🔥 SURVEY MANAGEMENT BUTTONS --}}
-                <div class="d-flex gap-2 mb-2">
-                    <a href="{{ route('events.assignSurvey', $event->id) }}"
-                       class="btn btn-outline-primary w-50">
-                        📌 Assign Existing Survey
-                    </a>
+                @auth
+                    @if(auth()->user()->isAdmin())
 
-                    <a href="{{ route('surveys.create') }}"
-                       class="btn btn-outline-success w-50">
-                        ➕ Create New Survey
-                    </a>
-                </div>
+                        <div class="d-flex gap-2 mb-2">
+                            <a href="{{ route('events.assignSurvey', $event->id) }}"
+                            class="btn btn-outline-primary w-50">
+                                📌 Assign Existing Survey
+                            </a>
+
+                            <a href="{{ route('surveys.create') }}"
+                            class="btn btn-outline-success w-50">
+                                ➕ Create New Survey
+                            </a>
+                        </div>
+
+                    @endif
+                @endauth
+
 
                 {{-- 🔥 REPORT BUTTONS --}}
                 <div class="d-flex gap-2">

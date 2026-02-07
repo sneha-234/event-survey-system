@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\ReportController;
@@ -8,7 +9,7 @@ use App\Http\Controllers\SurveyQuestionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect('/events');
+    return redirect('/login');
 });
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
@@ -28,4 +29,9 @@ Route::post('/admin/surveys', [SurveyController::class, 'store'])->name('surveys
 Route::get('/admin/surveys/{survey}/edit', [SurveyController::class, 'edit'])->name('surveys.edit');
 Route::post('/admin/surveys/{survey}/questions', [SurveyQuestionController::class, 'store'])->name('survey.questions.store');
 Route::post('/admin/surveys/{survey}/publish',[SurveyController::class, 'publish'])->name('surveys.publish');
-
+Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
+Route::middleware('auth')->group(function () {
+    Route::get('/events', [EventController::class, 'index'])->name('events.index');
+});

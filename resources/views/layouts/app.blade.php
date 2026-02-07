@@ -12,6 +12,14 @@
 
     <div class="container py-5">
         @yield('content')
+        @auth
+            <form method="POST" action="/logout" style="display:inline;">
+                @csrf
+                <button class="btn btn-sm btn-outline-danger">
+                    Logout
+                </button>
+            </form>
+        @endauth
     </div>
 
 </body>
